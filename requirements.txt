@@ -1,0 +1,11 @@
+# Google Gemini API SDK (TTS, STT, Multimodal 전사)
+google-genai>=2.22.0
+
+# 유튜브 오디오 다운로드 및 미디어 추출
+yt-dlp>=2026.8.19
+
+# 백엔드 웹 프레임워크 및 ASGI 서버
+fastapi>=0.141.0
+uvicorn>=0.52.0
+python-multipart>=0.0.32
+pydantic>=2.9.0
