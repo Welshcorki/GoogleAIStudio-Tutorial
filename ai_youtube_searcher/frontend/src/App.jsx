@@ -43,6 +43,38 @@ function timeToSeconds(timeStr) {
   return 0
 }
 
+// 다중 화자 구분을 위한 고유 컬러 테마 팔레트
+const SPEAKER_COLORS = [
+  { bg: 'bg-blue-950/80', text: 'text-blue-300', border: 'border-blue-500/40' },       // 화자 1: 블루
+  { bg: 'bg-purple-950/80', text: 'text-purple-300', border: 'border-purple-500/40' }, // 화자 2: 퍼플
+  { bg: 'bg-emerald-950/80', text: 'text-emerald-300', border: 'border-emerald-500/40' }, // 화자 3: 에메랄드/그린
+  { bg: 'bg-amber-950/80', text: 'text-amber-300', border: 'border-amber-500/40' },   // 화자 4: 앰버/오렌지
+  { bg: 'bg-rose-950/80', text: 'text-rose-300', border: 'border-rose-500/40' },       // 화자 5: 로즈/핑크
+  { bg: 'bg-cyan-950/80', text: 'text-cyan-300', border: 'border-cyan-500/40' },       // 화자 6: 시안/청록
+  { bg: 'bg-indigo-950/80', text: 'text-indigo-300', border: 'border-indigo-500/40' }, // 화자 7: 인디고
+  { bg: 'bg-lime-950/80', text: 'text-lime-300', border: 'border-lime-500/40' },       // 화자 8: 라임
+]
+
+function getSpeakerColorClass(speakerStr) {
+  if (!speakerStr) return 'bg-gray-800/80 text-gray-300 border border-gray-600/40'
+
+  const match = speakerStr.match(/\d+/)
+  let index = 0
+  if (match) {
+    const num = parseInt(match[0], 10)
+    index = Math.max(0, num - 1) % SPEAKER_COLORS.length
+  } else {
+    let hash = 0
+    for (let i = 0; i < speakerStr.length; i++) {
+      hash = speakerStr.charCodeAt(i) + ((hash << 5) - hash)
+    }
+    index = Math.abs(hash) % SPEAKER_COLORS.length
+  }
+
+  const c = SPEAKER_COLORS[index]
+  return `${c.bg} ${c.text} ${c.border}`
+}
+
 export default function App() {
   const [url, setUrl] = useState('')
   const [activeVideoId, setActiveVideoId] = useState('')
@@ -590,11 +622,7 @@ export default function App() {
 
                         <div className="flex-1 min-w-0">
                           {seg.speaker && (
-                            <span className={`inline-block text-[10px] font-bold px-1.5 py-0.5 rounded mr-1.5 mb-1 ${
-                              seg.speaker.includes('2')
-                                ? 'bg-purple-900/60 text-purple-300 border border-purple-500/30'
-                                : 'bg-blue-900/60 text-blue-300 border border-blue-500/30'
-                            }`}>
+                            <span className={`inline-block text-[10px] font-extrabold px-2 py-0.5 rounded-md mr-1.5 mb-1 ${getSpeakerColorClass(seg.speaker)}`}>
                               {seg.speaker}
                             </span>
                           )}
@@ -691,11 +719,7 @@ export default function App() {
                             {seg.time}
                           </span>
                           {seg.speaker && (
-                            <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded flex-shrink-0 ${
-                              seg.speaker.includes('2')
-                                ? 'bg-purple-900/60 text-purple-300'
-                                : 'bg-blue-900/60 text-blue-300'
-                            }`}>
+                            <span className={`text-[10px] font-extrabold px-2 py-0.5 rounded-md flex-shrink-0 ${getSpeakerColorClass(seg.speaker)}`}>
                               {seg.speaker}
                             </span>
                           )}
