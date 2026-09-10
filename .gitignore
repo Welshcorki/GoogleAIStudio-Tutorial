@@ -216,3 +216,40 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# ==========================================
+# 1. Node / Frontend
+# ==========================================
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+frontend/dist/
+
+# ==========================================
+# 1. Audio / Temporary data
+# ==========================================
+temp_audio/
+*.wav
+*.mp3
+*.m4a
+*.webm
+*.ogg
+data/*.wav
+data/*.mp3
+
+# ==========================================
+# 2. IDE / Environment / OS Settings
+# ==========================================
+.vscode/
+.env.local
+.env.*.local
+Thumbs.db
+[Dd]esktop.ini
+.DS_Store
+
+# ==========================================
+# 3. Frontend Build Outputs
+# ==========================================
+static/
